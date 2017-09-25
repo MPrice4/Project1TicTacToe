@@ -10,7 +10,7 @@ public class TicTacToeModel{
         
         X("X"), 
         O("O"), 
-        EMPTY(" ");
+        EMPTY("-");
 
         private String message;
         
@@ -74,10 +74,18 @@ public class TicTacToeModel{
         /* Create grid (width x width) as a 2D Mark array */
 
         /* INSERT YOUR CODE HERE */
+		
+		grid = new Mark[width][width];
 
         /* Initialize grid by filling every square with empty marks */
 
         /* INSERT YOUR CODE HERE */
+		
+		for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[0].length; j++) {
+				grid[i][j] = Mark.EMPTY;
+			}
+		}
         
     }
 	
@@ -88,9 +96,17 @@ public class TicTacToeModel{
            empty! */
         
         /* INSERT YOUR CODE HERE */
+		
+		if(isValidSquare(row, col) && !isSquareMarked(row, col)) {
+			if(isXTurn()){
+				grid[row][col] = Mark.X;
+				return true;
+			}
+			else grid[row][col] = Mark.O;
+			return true;
+		}
 
-        return false; /* remove this line! */
-        
+        else return false;        
     }
 	
     private boolean isValidSquare(int row, int col) {
@@ -99,8 +115,10 @@ public class TicTacToeModel{
         
         /* INSERT YOUR CODE HERE */
 
-        return false; /* remove this line! */
-        
+        if(row < width && col < width) {
+			return true;
+		}
+        else return false;
     }
 	
     private boolean isSquareMarked(int row, int col) {
@@ -109,8 +127,10 @@ public class TicTacToeModel{
         
         /* INSERT YOUR CODE HERE */
 
-        return false; /* remove this line! */
-            
+        if(grid[row][col] == Mark.X || grid[row][col] == Mark.O) {
+			return true;
+		}
+		else return false;
     }
 	
     public Mark getMark(int row, int col) {
@@ -119,8 +139,7 @@ public class TicTacToeModel{
         
         /* INSERT YOUR CODE HERE */
 
-        return null; /* remove this line! */
-            
+        return grid[row][col];
     }
 	
     public Result getResult() {
@@ -130,9 +149,19 @@ public class TicTacToeModel{
            value */
         
         /* INSERT YOUR CODE HERE */
-
-        return null; /* remove this line! */
-
+/*
+        if(isMarkWin() && isXTurn()) {
+			return Result.X;
+		}
+		else if(isMarkWin() && !isXTurn()) {
+			return Result.O;
+		}
+		else if(isTie()) {
+			return Result.TIE;
+		}
+		else return Result.NONE;
+*/
+		return null;
     }
 	
     private boolean isMarkWin(Mark mark) {
