@@ -100,9 +100,11 @@ public class TicTacToeModel{
 		if(isValidSquare(row, col) && !isSquareMarked(row, col)) {
 			if(isXTurn()){
 				grid[row][col] = Mark.X;
+				xTurn = false;
 				return true;
 			}
 			else grid[row][col] = Mark.O;
+			xTurn = true;
 			return true;
 		}
 
@@ -115,7 +117,7 @@ public class TicTacToeModel{
         
         /* INSERT YOUR CODE HERE */
 
-        if(row < width && col < width) {
+        if(row < getWidth() && row >= 0 && col < getWidth() && col >= 0) {
 			return true;
 		}
         else return false;
@@ -149,19 +151,18 @@ public class TicTacToeModel{
            value */
         
         /* INSERT YOUR CODE HERE */
-/*
-        if(isMarkWin() && isXTurn()) {
+
+        if(isMarkWin(Mark.X) && isXTurn()) {
 			return Result.X;
 		}
-		else if(isMarkWin() && !isXTurn()) {
+		else if(isMarkWin(Mark.O) && !isXTurn()) {
 			return Result.O;
 		}
 		else if(isTie()) {
 			return Result.TIE;
 		}
 		else return Result.NONE;
-*/
-		return null;
+
     }
 	
     private boolean isMarkWin(Mark mark) {
@@ -170,9 +171,32 @@ public class TicTacToeModel{
            winner */
         
         /* INSERT YOUR CODE HERE */
-
-        return false; /* remove this line! */
-
+		for (int x = 0; x < grid.length; x++) {
+			for (int y = 0; y < grid[x].length; y++) {
+				Mark sym = grid[x][y];
+				if (sym != mark) {
+					break;
+				}
+				if (y == grid[x].length) {
+					//  Early Return.... We have a WINNER!
+					return true;
+				}
+			}
+		}
+		for (int y = 0; y < grid[0].length; y++) {
+			for (int x = 0; x < grid.length; x++) {
+				Mark sym = grid[x][y];
+				if (sym != mark) {
+					break;
+				}
+				if (x == grid.length) {
+					//  Early Return.... We have a WINNER!
+					return true;
+				}
+			}
+		}
+		
+		return false;
     }
 	
     private boolean isTie() {
@@ -180,8 +204,16 @@ public class TicTacToeModel{
         /* Check the squares of the board to see if the game is a tie */
 
         /* INSERT YOUR CODE HERE */
+		boolean isFull = true;
 
-        return false; /* remove this line! */
+        for(int i = 0; i < grid.length; i++) {
+			for(int j = 0; j < grid[i].length; j++) {
+				if(grid[i][j] == Mark.EMPTY) {
+					isFull = false;
+				}
+			}
+		}
+		return isFull;
         
     }
 
