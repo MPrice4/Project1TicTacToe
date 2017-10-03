@@ -152,10 +152,10 @@ public class TicTacToeModel{
         
         /* INSERT YOUR CODE HERE */
 
-        if(isMarkWin(Mark.X) && isXTurn()) {
+        if(isMarkWin(Mark.X)) {
 			return Result.X;
 		}
-		else if(isMarkWin(Mark.O) && !isXTurn()) {
+		else if(isMarkWin(Mark.O)) {
 			return Result.O;
 		}
 		else if(isTie()) {
@@ -171,31 +171,26 @@ public class TicTacToeModel{
            winner */
         
         /* INSERT YOUR CODE HERE */
-		for (int x = 0; x < grid.length; x++) {
-			for (int y = 0; y < grid[x].length; y++) {
-				Mark sym = grid[x][y];
-				if (sym != mark) {
-					break;
-				}
-				if (y == grid[x].length) {
-					//  Early Return.... We have a WINNER!
-					return true;
-				}
+		for(int i = 0; i < getWidth(); i++) {
+			for(int j = 0; j < grid[i].length; j++) {
+				if(getMark(i,j) != mark) break;
+				if(j == getWidth()-1) return true;
 			}
 		}
-		for (int y = 0; y < grid[0].length; y++) {
-			for (int x = 0; x < grid.length; x++) {
-				Mark sym = grid[x][y];
-				if (sym != mark) {
-					break;
-				}
-				if (x == grid.length) {
-					//  Early Return.... We have a WINNER!
-					return true;
-				}
+		for(int i = 0; i < getWidth(); i++) {
+			for(int j = 0; j < grid[i].length; j++) {
+				if(getMark(j,i) != mark) break;
+				if(j == getWidth()-1) return true;
 			}
 		}
-		
+		for(int i = 0; i < getWidth(); i++) {
+			if(getMark(i,i) != mark) break;
+			if(i == getWidth()-1) return true;
+		}
+		for(int i = 0; i < getWidth(); i++) {
+			if(getMark(i,(getWidth()-1)-i) != mark) break;
+			if(i == getWidth()-1) return true;
+		}
 		return false;
     }
 	
